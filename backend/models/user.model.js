@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import { hash, compare } from 'bcryptjs';
-import jwt from 'jsonwebtoken'
+import { hash } from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -27,26 +26,26 @@ const userSchema = new mongoose.Schema({
     activeDevices: [{
         deviceName: {
             type: String,
-            required: true
+            
         },
         accessToken: {
             type: String,
-            required: true
+            
         }
     }],
     loginHistory: [{
         deviceName: {
             type: String,
-            required: true
+            
         },
         action: {
             type: String,
             enum: ['login', 'logout'],
-            required: true
+            
         },
         time: {
             type: Date,
-            req : true,
+            
         }
     }]
 } , {timestamps : true});
@@ -58,6 +57,7 @@ userSchema.pre('save', async function (next) {
     }
     next();
 });
+
 
 export const User = mongoose.model('User', userSchema);
 
